@@ -1,15 +1,17 @@
 #include "KeywurlBrowserWindowController.h"
 #include "KeywurlPlugin.h"
 
-@implementation KeywurlBrowserWindowController
+#include <objc/runtime.h>
+
+@implementation NSObject (KeywurlBrowserWindowController)
 
 // We override this method to intercept addresses at an early stage without 
 // invoking Safari's fallback system. This is quicker as it avoids unnecessary 
 // DNS lookups
-- (void) goToToolbarLocation: (id) sender {
+- (void) keywurl_goToToolbarLocation: (id) sender {
     KeywurlPlugin* plugin = [KeywurlPlugin sharedInstance];
     KeywordMapper* mapper = [plugin keywordMapper];
-    NSString* input = [[_locationFieldEditor textStorage] string];
+    NSString* input = [[[self keywurl_locationFieldEditor] textStorage] string];
     if (input) {
         BOOL useDefault = NO;
         if ([input rangeOfString: @" "].location != NSNotFound ||
@@ -20,14 +22,19 @@
         }
         NSString* newUrl = [mapper mapKeywordInput: input withDefault: useDefault];
         if (![input isEqualToString: newUrl]) {
-            [_locationFieldEditor->field setObjectValue: newUrl];
+			NSTextField *field;
+			object_getInstanceVariable([self keywurl_locationFieldEditor],
+									   "field", (void**)&field);
+            [field setObjectValue: newUrl];
         }
     }
-    return [super goToToolbarLocation: sender];
+    return [self keywurl_goToToolbarLocation: sender];
 }
 
-- (id) keywurl_locationFieldEditor {
-    return _locationFieldEditor;
+- (LocationFieldEditor*) keywurl_locationFieldEditor {
+    LocationFieldEditor *ret;
+	object_getInstanceVariable(self, "_locationFieldEditor", (void**)&ret);
+	return ret;
 }
 
 @end

@@ -1,8 +1,8 @@
 #import <Cocoa/Cocoa.h>
 #import "Safari.h"
 
-@interface KeywurlBrowserWindowController : BrowserWindowController
+@interface NSObject (KeywurlBrowserWindowController)
 
-- (id) keywurl_locationFieldEditor;
+- (LocationFieldEditor*) keywurl_locationFieldEditor;
 
 @end

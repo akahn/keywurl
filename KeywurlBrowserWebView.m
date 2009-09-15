@@ -2,19 +2,19 @@
 #include "KeywurlBrowserWindowController.h"
 #include "KeywurlPlugin.h"
 
-@implementation KeywurlBrowserWebView
+@implementation NSObject (KeywurlBrowserWebView)
 
 #if KEYWURL_SAFARI_VERSION >= 4
 
-- (NSArray*) fallbackURLs {
+- (NSArray*) keywurl_fallbackURLs {
     // If Safari has failed to resolve the address into a proper host name, the
     // list of fallback URLs is empty and we can intercept the URL and map it
-    NSArray* urls = [super fallbackURLs];
+    NSArray* urls = [self keywurl_fallbackURLs];
     if (urls == nil || [urls count] == 0) {
     	KeywurlPlugin* plugin = [KeywurlPlugin sharedInstance];
         KeywordMapper* mapper = [plugin keywordMapper];
         LocationFieldEditor* fieldEditor = (LocationFieldEditor*) [
-          (KeywurlBrowserWindowController*) [self windowController] keywurl_locationFieldEditor];
+          [self windowController] keywurl_locationFieldEditor];
     	NSString* address = [[fieldEditor textStorage] string];
         NSString* mapped = [mapper mapKeywordInput: address];
     	if (mapped && ![mapped isEqualToString: address]) {
@@ -27,7 +27,7 @@
 
 #else
 
-- (NSArray*) fallbackURLs {
+- (NSArray*) keywurl_fallbackURLs {
 	KeywurlPlugin* plugin = [KeywurlPlugin sharedInstance];
     KeywordMapper* mapper = [plugin keywordMapper];
     LocationFieldEditor* fieldEditor = (LocationFieldEditor*) [
@@ -44,7 +44,7 @@
 
 #endif
 
-- (id) webView: (id) sender 
+- (id) keywurl_webView: (id) sender 
     contextMenuItemsForElement: (id) elementDictionary
     defaultMenuItems: (NSMutableArray*) defaultMenuItems {
     NSString* documentUrl = [self mainFrameURL];
@@ -59,7 +59,7 @@
         [item setTarget: plugin];
         [defaultMenuItems addObject: item];
     }
-    return [super webView: sender
+    return [self keywurl_webView: sender
          contextMenuItemsForElement: elementDictionary
          defaultMenuItems: defaultMenuItems];
 }

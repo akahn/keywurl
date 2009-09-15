@@ -20,9 +20,9 @@ static KeywurlPlugin* plugin = nil;
     #endif
     KeywurlPlugin* plugin = [KeywurlPlugin sharedInstance];
     NSClassFromString(@"BrowserWindowController");
-    [[KeywurlBrowserWindowController class] poseAsClass: [BrowserWindowController class]];
+//    [[KeywurlBrowserWindowController class] poseAsClass: [BrowserWindowController class]];
     NSClassFromString(@"BrowserWebView");
-    [[KeywurlBrowserWebView class] poseAsClass: [BrowserWebView class]];
+//    [[KeywurlBrowserWebView class] poseAsClass: [BrowserWebView class]];
     
     NSUserDefaults* preferences = [[NSUserDefaults standardUserDefaults] retain];
     [preferences setObject: @"world" forKey: @"hello"];
