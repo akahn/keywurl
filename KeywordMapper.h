@@ -1,7 +1,7 @@
 #import <Cocoa/Cocoa.h>
 #import "KeywordMapping.h"
 
-extern const NSString* KeywordMapperMappingsDidChangeNotification;
+extern NSString* const KeywordMapperMappingsDidChangeNotification;
 
 @interface KeywordMapper : NSObject {
     NSMutableArray* mappings;

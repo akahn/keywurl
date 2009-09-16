@@ -14,7 +14,7 @@
     	KeywurlPlugin* plugin = [KeywurlPlugin sharedInstance];
         KeywordMapper* mapper = [plugin keywordMapper];
         LocationFieldEditor* fieldEditor = (LocationFieldEditor*) [
-          [self windowController] keywurl_locationFieldEditor];
+          [(BrowserWebView*)self windowController] keywurl_locationFieldEditor];
     	NSString* address = [[fieldEditor textStorage] string];
         NSString* mapped = [mapper mapKeywordInput: address];
     	if (mapped && ![mapped isEqualToString: address]) {
@@ -47,7 +47,7 @@
 - (id) keywurl_webView: (id) sender 
     contextMenuItemsForElement: (id) elementDictionary
     defaultMenuItems: (NSMutableArray*) defaultMenuItems {
-    NSString* documentUrl = [self mainFrameURL];
+    NSString* documentUrl = [(BrowserWebView*)self mainFrameURL];
     KeywurlPlugin* plugin = [KeywurlPlugin sharedInstance];
     id node = [elementDictionary objectForKey: @"WebElementDOMNode"];
     if (node) {

@@ -1,7 +1,7 @@
 #include "KeywordMapper.h"
 #include "KeywordMapping.h"
 
-const NSString* KeywordMapperMappingsDidChangeNotification = @"KeywordMapperMappingsDidChangeNotification";
+NSString* const KeywordMapperMappingsDidChangeNotification = @"KeywordMapperMappingsDidChangeNotification";
 
 @interface KeywordMapper (Internal)
 

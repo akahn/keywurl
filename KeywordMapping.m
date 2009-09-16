@@ -96,12 +96,12 @@
 
 - (NSArray*) expansionAsTokens {
     NSMutableArray* tokens = [NSMutableArray new];
-    int start = 0;
-    int searchStart = 0;
+    NSUInteger start = 0;
+    NSUInteger searchStart = 0;
     while (start < [expansion length]) {
         NSRange searchRange = NSMakeRange(searchStart, [expansion length] - searchStart);
-        int curlStart = [expansion rangeOfString: @"{" options: 0 range: searchRange].location;
-        int curlEnd = curlStart == NSNotFound ? NSNotFound : [expansion rangeOfString: @"}" options: 0 
+        NSUInteger curlStart = [expansion rangeOfString: @"{" options: 0 range: searchRange].location;
+        NSUInteger curlEnd = curlStart == NSNotFound ? NSNotFound : [expansion rangeOfString: @"}" options: 0 
             range: NSMakeRange(curlStart, [expansion length] - curlStart)].location;
         if (curlEnd != NSNotFound) {
             NSString* symbol = [expansion substringWithRange: NSMakeRange(curlStart + 1, curlEnd - curlStart - 1)];

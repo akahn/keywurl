@@ -7,9 +7,7 @@
 @implementation NSPreferences (KeywurlNSPreferences)
 
 + (void) load
-{
-//	[NSPreferences_Keywurl poseAsClass: [NSPreferences class]];
-	
+{	
 	// Class method -> target should be metaclass
 	NSError *err = nil;
 	[object_getClass(self) jr_swizzleMethod: @selector(sharedPreferences)

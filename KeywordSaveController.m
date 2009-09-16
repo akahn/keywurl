@@ -70,7 +70,7 @@
                     value = @"Default button";
                 }
                 [buttonPopupButton insertItemWithTitle: value atIndex: index];
-                NSMenuItem* item = [buttonPopupButton itemAtIndex: index];
+                NSMenuItem* item = [(NSPopUpButton*)buttonPopupButton itemAtIndex: index];
                 [item setRepresentedObject: name];
                 index++;
             }
