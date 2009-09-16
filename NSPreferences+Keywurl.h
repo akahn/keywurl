@@ -1,10 +1,9 @@
 #import <Cocoa/Cocoa.h>
 #import "NSPreferenceModule.h"
 
-@interface NSPreferences_Keywurl : NSPreferences {
-}
+@interface NSPreferences (KeywurlNSPreferences)
 
 + (void) load;
-+ (id) sharedPreferences;
++ (id) keywurl_sharedPreferences;
 
 @end
