@@ -1,7 +1,7 @@
 #include "KeywurlBrowserWindowController.h"
 #include "KeywurlPlugin.h"
 
-#include <objc/runtime.h>
+#import <objc/runtime.h>
 
 @implementation NSObject (KeywurlBrowserWindowController)
 

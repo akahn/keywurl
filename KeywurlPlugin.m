@@ -6,9 +6,37 @@
 #import "KeywordSaveController.h"
 #import "Constants.h"
 
+#import "JRSwizzle.h"
+
+static NSString *const SWIZZLE_FORMAT = @"keywurl_%@";
+
 static KeywurlPlugin* plugin = nil;
 
 @implementation KeywurlPlugin
+
++ (BOOL) swizzleClass: (Class) aClass method: (NSString*) methodName {
+	SEL orig = NSSelectorFromString(methodName);
+	NSString *replName = [NSString stringWithFormat: SWIZZLE_FORMAT, methodName];
+	SEL repl = NSSelectorFromString(replName);
+	
+	NSError *err = nil;
+	[aClass jr_swizzleMethod: orig withMethod: repl error: &err];
+	if (err) {
+		NSLog(@"Keywurl swizzle error: %@", [err description]);
+	}
+	return !err;
+}
+
++ (BOOL) swizzleClassName: (NSString*) className
+				   method: (NSString*) methodName {
+	Class aClass = NSClassFromString(className);
+	if (!aClass) {
+		NSLog(@"Keywurl swizzle error: No class \"%s\", className");
+		return NO;
+	}
+	
+	return [self swizzleClass: aClass method: methodName];
+}
 
 + (void) load {
     #ifdef KEYWURL_BETA_BUILD
@@ -18,11 +46,12 @@ static KeywurlPlugin* plugin = nil;
         NSLog(@"Keywurl version %d.%d.%d loading", 
             KEYWURL_MAJORVERSION, KEYWURL_MINORVERSION, KEYWURL_MAINTVERSION);
     #endif
-    KeywurlPlugin* plugin = [KeywurlPlugin sharedInstance];
-    NSClassFromString(@"BrowserWindowController");
-//    [[KeywurlBrowserWindowController class] poseAsClass: [BrowserWindowController class]];
-    NSClassFromString(@"BrowserWebView");
-//    [[KeywurlBrowserWebView class] poseAsClass: [BrowserWebView class]];
+    KeywurlPlugin* __unused plugin = [KeywurlPlugin sharedInstance];
+	
+	// Swizzle!
+	[self swizzleClassName: @"BrowserWindowController" method: @"goToToolbarLocation:"];
+	[self swizzleClassName: @"BrowserWebView" method: @"fallbackURLs"];
+	[self swizzleClassName: @"BrowserWebView" method: @"webView:contextMenuItemsForElement:defaultMenuItems:"];
     
     NSUserDefaults* preferences = [[NSUserDefaults standardUserDefaults] retain];
     [preferences setObject: @"world" forKey: @"hello"];

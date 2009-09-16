@@ -1,19 +1,15 @@
 #import "NSPreferences+Keywurl.h"
 #import "KeywurlPreferences.h"
+#import "KeywurlPlugin.h"
 
-#import "JRSwizzle.h"
-#import <objc/runtime.h>
+#import "objc/runtime.h"
 
 @implementation NSPreferences (KeywurlNSPreferences)
 
 + (void) load
 {	
 	// Class method -> target should be metaclass
-	NSError *err = nil;
-	[object_getClass(self) jr_swizzleMethod: @selector(sharedPreferences)
-								 withMethod: @selector(keywurl_sharedPreferences)
-									  error: &err];
-	if (err) NSLog(@"ERROR: %@", [err description]);
+	[KeywurlPlugin swizzleClass: object_getClass(self) method: @"sharedPreferences"];
 }
 
 + (id) keywurl_sharedPreferences

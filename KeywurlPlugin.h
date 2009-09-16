@@ -19,4 +19,9 @@
 
 - (IBAction) createKeywordSearchFromForm: (id) sender;
 
+// Swizzling utilities
++ (BOOL) swizzleClass: (Class) aClass method: (NSString*) methodName;
++ (BOOL) swizzleClassName: (NSString*) className
+				   method: (NSString*) methodName;
+
 @end
