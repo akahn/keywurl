@@ -27,7 +27,10 @@
     #elif KEYWURL_SAFARI_VERSION == 4
         #define KEYWURL_MIN_SAFARI_VERSION 5530
         #define KEYWURL_MAX_SAFARI_VERSION 6531.9
-    #else
+	#elif KEYWURL_SAFARI_VERSION == 5
+		#define KEYWURL_MIN_SAFARI_VERSION 6533.16
+		#define KEYWURL_MAX_SAFARI_VERSION 6533.18
+	#else
         #error "You need to define KEYWURL_SAFARI_VERSION correctly"
     #endif
 #endif
