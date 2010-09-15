@@ -26,6 +26,14 @@
 	<array>
 		<dict>
 			<key>BundleIdentifier</key>
+			<string>org.webkit.nightly.WebKit</string>
+			<key>MaxBundleVersion</key>
+			<string>68000</string>
+			<key>MinBundleVersion</key>
+			<string>67077</string>
+		</dict>
+		<dict>
+			<key>BundleIdentifier</key>
 			<string>com.apple.Safari</string>
 			<key>MinBundleVersion</key>
 			<string>KEYWURL_MIN_SAFARI_VERSION</string>
